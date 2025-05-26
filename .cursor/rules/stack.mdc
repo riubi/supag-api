@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Technical stack
+
+- NestJS backend
+- DB postgressql
+- 2 envs: dev and prod
