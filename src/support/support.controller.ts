@@ -8,6 +8,13 @@ import { ContactDto } from './dto/contact.dto';
 export class SupportController {
   constructor(private readonly supportService: SupportService) {}
 
+  @Get('health-check')
+  @ApiOperation({ summary: 'Health check' })
+  @ApiResponse({ status: 200, description: 'Health check successful' })
+  async healthCheck() {
+    return `Health check successful`;
+  }
+
   @Post('contact')
   @ApiOperation({ summary: 'Send contact message' })
   @ApiResponse({ status: 201, description: 'Message sent successfully' })
