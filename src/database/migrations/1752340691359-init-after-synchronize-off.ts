@@ -25,8 +25,6 @@ export class InitAfterSynchronizeOff1752340691359 implements MigrationInterface 
       SET client_min_messages = warning;
       SET row_security = off;
 
-      CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
-
       COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
 
       CREATE TYPE public.notifications_type_enum AS ENUM (
@@ -202,6 +200,6 @@ export class InitAfterSynchronizeOff1752340691359 implements MigrationInterface 
     await queryRunner.query(`DROP TYPE IF EXISTS "public"."users_role_enum";`);
 
     // Drop extension
-    await queryRunner.query(`DROP EXTENSION IF EXISTS "uuid-ossp";`);
+    // await queryRunner.query(`DROP EXTENSION IF EXISTS "uuid-ossp";`);
   }
 }

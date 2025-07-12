@@ -24,6 +24,7 @@
     "migrate:show": "env-cmd -f .env.development typeorm migration:show -d ./dist/config/migrations-datasource.js && tail -n 10 ormlogs.log",
     "migrate:revert": "env-cmd -f .env.development typeorm migration:revert -d ./dist/config/migrations-datasource.js",
     "migrate:run": "env-cmd -f .env.development typeorm migration:run -d ./dist/config/migrations-datasource.js",
+    "migrate:run:staging": "env-cmd -f .env.staging typeorm migration:run -d ./dist/config/migrations-datasource.js",
     "migrate:run:test": "env-cmd -f .env.test.development typeorm migration:run -d ./dist/config/migrations-datasource.js",
     "migrate:show:test": "env-cmd -f .env.test.development typeorm migration:show -d ./dist/config/migrations-datasource.js",
     "migrate:revert:test": "env-cmd -f .env.test.development typeorm migration:revert -d ./dist/config/migration-datasource.js",
