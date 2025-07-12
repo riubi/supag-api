@@ -30,14 +30,10 @@ export class InitAfterSynchronizeOff1752340691359 implements MigrationInterface 
         'price_change'
       );
 
-      ALTER TYPE public.notifications_type_enum OWNER TO postgres;
-
       CREATE TYPE public.users_role_enum AS ENUM (
         'customer',
         'supplier'
       );
-
-      ALTER TYPE public.users_role_enum OWNER TO postgres;
 
       SET default_tablespace = '';
       SET default_table_access_method = heap;
@@ -52,16 +48,12 @@ export class InitAfterSynchronizeOff1752340691359 implements MigrationInterface 
         place_types jsonb DEFAULT '[]'::jsonb
       );
 
-      ALTER TABLE public.establishments OWNER TO postgres;
-
       CREATE TABLE public.favorites (
         id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
         user_id uuid NOT NULL,
         product_id uuid NOT NULL,
         created_at timestamp without time zone DEFAULT now() NOT NULL
       );
-
-      ALTER TABLE public.favorites OWNER TO postgres;
 
       CREATE TABLE public.notifications (
         id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
@@ -74,8 +66,6 @@ export class InitAfterSynchronizeOff1752340691359 implements MigrationInterface 
         date timestamp without time zone DEFAULT now() NOT NULL
       );
 
-      ALTER TABLE public.notifications OWNER TO postgres;
-
       CREATE TABLE public.product_categories (
         id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
         name character varying NOT NULL,
@@ -87,8 +77,6 @@ export class InitAfterSynchronizeOff1752340691359 implements MigrationInterface 
         created_at timestamp without time zone DEFAULT now() NOT NULL,
         updated_at timestamp without time zone DEFAULT now() NOT NULL
       );
-
-      ALTER TABLE public.product_categories OWNER TO postgres;
 
       CREATE TABLE public.products (
         id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
@@ -116,8 +104,6 @@ export class InitAfterSynchronizeOff1752340691359 implements MigrationInterface 
         abv numeric(4,2)
       );
 
-      ALTER TABLE public.products OWNER TO postgres;
-
       CREATE TABLE public.users (
         id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
         email character varying NOT NULL,
@@ -137,8 +123,6 @@ export class InitAfterSynchronizeOff1752340691359 implements MigrationInterface 
         manager_position character varying,
         manager_phone character varying
       );
-
-      ALTER TABLE public.users OWNER TO postgres;
 
       ALTER TABLE ONLY public.products
         ADD CONSTRAINT "PK_0806c755e0aca124e67c0cf6d7d" PRIMARY KEY (id);
