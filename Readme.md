@@ -12,3 +12,13 @@ CREATE DATABASE supag_dev;
   psql -U postgres -h localhost -p 5435
   CREATE ROLE postgres WITH LOGIN SUPERUSER PASSWORD '{take-from-env}'
 ```
+
+# Heroku CLI
+
+First of all do
+
+`heroku login`
+
+## Backend logs
+
+`heroku logs --app=supag-pup-backend`
