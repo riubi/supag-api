@@ -27,9 +27,9 @@
     "migrate:run:staging": "env-cmd -f .env.staging typeorm migration:run -d ./dist/config/migrations-datasource.js",
     "migrate:run:test": "env-cmd -f .env.test.development typeorm migration:run -d ./dist/config/migrations-datasource.js",
     "migrate:show:test": "env-cmd -f .env.test.development typeorm migration:show -d ./dist/config/migrations-datasource.js",
-    "migrate:revert:test": "env-cmd -f .env.test.development typeorm migration:revert -d ./dist/config/migration-datasource.js",
-    "migrate:run:prod": "typeorm migration:run -d ./dist/config/migration-datasource.js",
-    "migrate:show:prod": "typeorm migration:show -d ./dist/config/migration-datasource.js"
+    "migrate:revert:test": "env-cmd -f .env.test.development typeorm migration:revert -d ./dist/config/migrations-datasource.js",
+    "migrate:run:prod": "typeorm migration:run -d ./dist/config/migrations-datasource.js",
+    "migrate:show:prod": "typeorm migration:show -d ./dist/config/migrations-datasource.js"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.9.1",
