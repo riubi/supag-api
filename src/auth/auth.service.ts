@@ -57,7 +57,14 @@ export class AuthService {
   }
 
   async register(registerDto: RegisterDto) {
-    const { email, password } = registerDto;
+    const { email, password, isCustomer, places, managerDetails, unpData } = registerDto;
+    const taxId = unpData.vkods;
+    const role = isCustomer ? UserRole.CUSTOMER : UserRole.SUPPLIER;
+    const establishments = places.map(place => ({
+      name: place.name,
+      address: place.address,
+      type: place.type,
+    }));
 
     // Check if user already exists
     const existingUser = await this.userRepository.findOne({

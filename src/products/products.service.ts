@@ -95,9 +95,9 @@ export class ProductsService {
     const updatedProduct = await this.productRepository.save(product);
 
     // Notify if price changed
-    if (oldPrice !== updatedProduct.price) {
-      await this.notificationsService.notifyPriceChange(updatedProduct, oldPrice);
-    }
+    // if (oldPrice !== updatedProduct.price) {
+    //   await this.notificationsService.notifyPriceChange(updatedProduct, oldPrice);
+    // }
 
     return updatedProduct;
   }
@@ -179,7 +179,7 @@ export class ProductsService {
           name: p.name,
           description: p.description,
           price: p.price,
-          quantity: p.quantity,
+          // quantity: p.quantity,
           category: p.category?.name,
           subCategory: p.subcategory,
         }))
@@ -211,7 +211,7 @@ export class ProductsService {
         name: product.name,
         description: product.description,
         price: product.price,
-        quantity: product.quantity,
+        // quantity: product.quantity,
         category: product.category?.name,
         subCategory: product.subcategory,
       });
