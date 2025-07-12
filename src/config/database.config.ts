@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
+const herokuSpecificSslConfig = {
+  ssl: {
+    rejectUnauthorized: false,
+  },
+};
+
 @Injectable()
 export class DatabaseConfig implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
@@ -15,7 +21,7 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
       type: 'postgres',
       host: process.env.DB_HOST || 'localhost',
       port: parseInt(process.env.DB_PORT) || 5432,
-      ...(process.env.PG_SSL === 'true' && { ssl: true }),
+      ...(process.env.PG_SSL === 'true' && herokuSpecificSslConfig),
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'password',
       database: process.env.DB_NAME || 'supag_dev',
