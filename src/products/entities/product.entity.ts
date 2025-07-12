@@ -11,6 +11,7 @@ import {
 import { User } from '../../users/entities/user.entity';
 import { ProductCategory } from './product-category.entity';
 import { Favorite } from './favorite.entity';
+import { IFilter } from '../../shared/interfaces/category.interface';
 
 @Entity('products')
 export class Product {
@@ -23,26 +24,59 @@ export class Product {
   @Column({ type: 'text', nullable: true })
   description: string;
 
+  @Column({ type: 'simple-array', nullable: true })
+  images: string[];
+
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
-
-  @Column({ type: 'int', default: 0 })
-  quantity: number;
-
-  @Column({ name: 'supplier_id' })
-  supplierId: string;
 
   @Column({ name: 'category_id' })
   categoryId: string;
 
-  @Column({ name: 'sub_category', nullable: true })
-  subCategory: string;
+  @Column({ type: 'jsonb', nullable: true })
+  subcategory: { name: string; value: string };
 
-  @Column({ type: 'json', nullable: true })
-  attributes: Record<string, any>;
+  @Column({ type: 'jsonb', nullable: true })
+  filters: IFilter[];
 
-  @Column({ default: true })
-  active: boolean;
+  @Column({ type: 'varchar', length: 2, nullable: true })
+  measure: 'ml' | 'gr';
+
+  @Column({ name: 'special_conditions', nullable: true })
+  specialConditions?: string;
+
+  @Column({ type: 'int', nullable: true })
+  volume: number;
+
+  @Column({ name: 'supplier_id' })
+  supplierId: string;
+
+  @Column({ name: 'in_stock', default: true })
+  inStock: boolean;
+
+  @Column({ nullable: true })
+  country: string;
+
+  @Column({ name: 'gift_box', nullable: true })
+  giftBox: boolean;
+
+  @Column({ nullable: true })
+  region: string;
+
+  @Column({ type: 'simple-array', nullable: true })
+  certificates: string[];
+
+  @Column({ name: 'is_manufacturer', nullable: true })
+  isManufacturer: boolean;
+
+  @Column({ nullable: true })
+  manufacturer: string;
+
+  @Column({ nullable: true })
+  brand: string;
+
+  @Column({ type: 'decimal', precision: 4, scale: 2, nullable: true })
+  abv: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

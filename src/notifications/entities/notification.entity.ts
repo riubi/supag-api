@@ -31,16 +31,16 @@ export class Notification {
   title: string;
 
   @Column({ type: 'text' })
-  message: string;
+  body: string;
 
   @Column({ type: 'json', nullable: true })
   data: Record<string, any>;
 
-  @Column({ default: false })
-  read: boolean;
+  @Column({ default: false, name: 'is_read' })
+  isRead: boolean;
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  @CreateDateColumn({ name: 'date' })
+  date: Date;
 
   // Relations
   @ManyToOne(() => User, (user) => user.notifications)

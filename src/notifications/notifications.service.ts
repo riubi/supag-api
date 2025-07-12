@@ -101,14 +101,14 @@ export class NotificationsService {
       throw new Error('Notification not found');
     }
 
-    notification.read = true;
+    notification.isRead = true;
     return this.notificationRepository.save(notification);
   }
 
   async markAllAsRead(userId: string) {
     await this.notificationRepository.update(
-      { userId, read: false },
-      { read: true }
+      { userId, isRead: false },
+      { isRead: true }
     );
 
     return { message: 'All notifications marked as read' };

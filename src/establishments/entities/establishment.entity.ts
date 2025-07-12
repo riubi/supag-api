@@ -20,6 +20,9 @@ export class Establishment {
   @Column()
   address: string;
 
+  @Column({ type: 'jsonb', nullable: true, default: [], name: 'place_types' })
+  type: string[];
+
   @Column({ name: 'user_id' })
   userId: string;
 

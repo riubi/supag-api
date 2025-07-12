@@ -1,5 +1,25 @@
-import { IsNotEmpty, IsString, IsNumber, IsOptional, IsUUID } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsNumber,
+  IsOptional,
+  IsUUID,
+  IsArray,
+  IsBoolean,
+  IsObject,
+  ValidateNested,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { IFilter } from '../../shared/interfaces/category.interface';
+import { Type } from 'class-transformer';
+
+class SubcategoryDto {
+  @IsString()
+  name: string;
+
+  @IsString()
+  value: string;
+}
 
 export class CreateProductDto {
   @ApiProperty({ example: 'Premium Coffee Beans' })
@@ -12,27 +32,92 @@ export class CreateProductDto {
   @IsString()
   description?: string;
 
+  @ApiProperty({ type: [String], required: false })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  images?: string[];
+
   @ApiProperty({ example: 25.99 })
   @IsNumber()
   @IsNotEmpty()
   price: number;
-
-  @ApiProperty({ example: 100 })
-  @IsNumber()
-  @IsNotEmpty()
-  quantity: number;
 
   @ApiProperty({ example: 'uuid-of-category' })
   @IsUUID()
   @IsNotEmpty()
   categoryId: string;
 
-  @ApiProperty({ example: 'Arabica', required: false })
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => SubcategoryDto)
+  subcategory?: SubcategoryDto;
+
+  @ApiProperty({ type: [Object], required: false })
+  @IsOptional()
+  @IsArray()
+  filters?: IFilter[];
+
+  @ApiProperty({ example: 'gr', required: false })
   @IsOptional()
   @IsString()
-  subCategory?: string;
+  measure?: 'ml' | 'gr';
 
-  @ApiProperty({ example: { origin: 'Colombia', roast: 'Medium' }, required: false })
+  @ApiProperty({ required: false })
   @IsOptional()
-  attributes?: Record<string, any>;
+  @IsString()
+  specialConditions?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsNumber()
+  volume?: number;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsBoolean()
+  inStock?: boolean;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  country?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsBoolean()
+  giftBox?: boolean;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  region?: string;
+
+  @ApiProperty({ type: [String], required: false })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  certificates?: string[];
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsBoolean()
+  isManufacturer?: boolean;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  manufacturer?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  brand?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsNumber()
+  abv?: number;
 } 

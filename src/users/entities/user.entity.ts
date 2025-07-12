@@ -38,6 +38,15 @@ export class User {
   @Column({ name: 'payer_address', nullable: true })
   payerAddress: string;
 
+  @Column({ name: 'manager_name', nullable: true })
+  managerName: string;
+
+  @Column({ name: 'manager_position', nullable: true })
+  managerPosition: string;
+
+  @Column({ name: 'manager_phone', nullable: true })
+  managerPhone: string;
+
   @Column({
     type: 'enum',
     enum: UserRole,

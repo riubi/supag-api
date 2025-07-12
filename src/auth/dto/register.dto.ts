@@ -1,21 +1,99 @@
-import { IsEmail, IsNotEmpty, IsString, IsEnum, IsArray, ValidateNested, IsOptional } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsArray,
+  ValidateNested,
+  IsBoolean,
+  IsObject,
+  IsOptional,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserRole } from '../../users/entities/user.entity';
+import { IManagerDetails, IPlace, IRegisterData, IUnpResponse } from '../../shared/interfaces/auth.interface';
 
-export class EstablishmentDto {
-  @ApiProperty({ example: 'Main Office' })
+export class UnpResponseDto implements IUnpResponse {
+  @ApiProperty()
   @IsString()
-  @IsNotEmpty()
-  name: string;
+  ckodsost: string;
 
-  @ApiProperty({ example: '123 Main St, City, Country' })
+  @ApiProperty({ type: 'null', required: false })
+  @IsOptional()
+  dlikv: null;
+
+  @ApiProperty()
   @IsString()
-  @IsNotEmpty()
-  address: string;
+  dreg: string;
+
+  @ApiProperty()
+  @IsString()
+  nmns: string;
+
+  @ApiProperty()
+  @IsString()
+  vkods: string;
+
+  @ApiProperty({ type: 'null', required: false })
+  @IsOptional()
+  vlikv: null;
+
+  @ApiProperty()
+  @IsString()
+  vmns: string;
+
+  @ApiProperty()
+  @IsString()
+  vnaimk: string;
+
+  @ApiProperty()
+  @IsString()
+  vnaimp: string;
+
+  @ApiProperty()
+  @IsString()
+  vpadres: string;
+
+  @ApiProperty()
+  @IsString()
+  vunp: string;
 }
 
-export class RegisterDto {
+export class PlaceDto implements IPlace {
+  @ApiProperty()
+  @IsString()
+  name: string;
+
+  @ApiProperty()
+  @IsString()
+  address: string;
+
+  @ApiProperty()
+  @IsArray()
+  @IsString({ each: true })
+  type: string[];
+}
+
+export class ManagerDetailsDto implements IManagerDetails {
+  @ApiProperty()
+  @IsString()
+  name: string;
+
+  @ApiProperty()
+  @IsString()
+  position: string;
+
+  @ApiProperty()
+  @IsString()
+  phone: string;
+}
+
+export class RegisterDto implements IRegisterData {
+  @ApiProperty()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => UnpResponseDto)
+  unpData: UnpResponseDto;
+
   @ApiProperty({ example: 'user@example.com' })
   @IsEmail()
   @IsNotEmpty()
@@ -26,19 +104,19 @@ export class RegisterDto {
   @IsNotEmpty()
   password: string;
 
-  @ApiProperty({ example: '123456789' })
-  @IsString()
-  @IsNotEmpty()
-  taxId: string;
+  @ApiProperty()
+  @IsBoolean()
+  isCustomer: boolean;
 
-  @ApiProperty({ enum: UserRole })
-  @IsEnum(UserRole)
-  role: UserRole;
-
-  @ApiProperty({ type: [EstablishmentDto], required: false })
-  @IsOptional()
+  @ApiProperty({ type: [PlaceDto] })
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => EstablishmentDto)
-  establishments?: EstablishmentDto[];
+  @Type(() => PlaceDto)
+  places: PlaceDto[];
+
+  @ApiProperty()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => ManagerDetailsDto)
+  managerDetails: ManagerDetailsDto;
 } 

@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { ProductCategory } from './entities/product-category.entity';
 import { Favorite } from './entities/favorite.entity';
-import { User, UserRole } from '../users/entities/user.entity';
 import { NotificationsService } from '../notifications/notifications.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -182,7 +181,7 @@ export class ProductsService {
           price: p.price,
           quantity: p.quantity,
           category: p.category?.name,
-          subCategory: p.subCategory,
+          subCategory: p.subcategory,
         }))
       }
     };
@@ -214,7 +213,7 @@ export class ProductsService {
         price: product.price,
         quantity: product.quantity,
         category: product.category?.name,
-        subCategory: product.subCategory,
+        subCategory: product.subcategory,
       });
     });
 

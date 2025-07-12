@@ -57,11 +57,11 @@ export class AuthService {
   }
 
   async register(registerDto: RegisterDto) {
-    const { email, password, taxId, role, establishments } = registerDto;
+    const { email, password } = registerDto;
 
     // Check if user already exists
     const existingUser = await this.userRepository.findOne({
-      where: [{ email }, { taxId }]
+      where: { email }
     });
 
     if (existingUser) {
