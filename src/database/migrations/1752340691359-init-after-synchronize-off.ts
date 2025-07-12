@@ -25,8 +25,6 @@ export class InitAfterSynchronizeOff1752340691359 implements MigrationInterface 
       SET client_min_messages = warning;
       SET row_security = off;
 
-      COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
-
       CREATE TYPE public.notifications_type_enum AS ENUM (
         'new_product',
         'price_change'
