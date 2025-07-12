@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, BadRequestException, ConflictException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, BadRequestException, ConflictException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,6 +13,7 @@ import { ExternalApiService } from '../external-api/external-api.service';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -57,18 +58,22 @@ export class AuthService {
   }
 
   async register(registerDto: RegisterDto) {
-    const { email, password, isCustomer, places, managerDetails, unpData } = registerDto;
-    const taxId = unpData.vkods;
+    this.logger.log('Registering user', registerDto);
+    const { email, password, isCustomer, unp } = registerDto;
+    const taxId = unp;
     const role = isCustomer ? UserRole.CUSTOMER : UserRole.SUPPLIER;
-    const establishments = places.map(place => ({
-      name: place.name,
-      address: place.address,
-      type: place.type,
-    }));
+    // const establishments = places.map(place => ({
+    //   name: place.name,
+    //   address: place.address,
+    //   type: place.type,
+    // }));
 
     // Check if user already exists
     const existingUser = await this.userRepository.findOne({
-      where: { email }
+      where: [
+        { email },
+        { taxId }
+      ]
     });
 
     if (existingUser) {
@@ -77,6 +82,7 @@ export class AuthService {
 
     // Validate tax ID with external API
     const taxValidation = await this.externalApiService.validateTaxId(taxId);
+    this.logger.log('Tax validation', taxValidation);
     if (!taxValidation.valid) {
       throw new BadRequestException('Invalid tax ID');
     }
@@ -102,15 +108,15 @@ export class AuthService {
     const savedUser = await this.userRepository.save(user);
 
     // Create establishments for customers
-    if (role === UserRole.CUSTOMER && establishments?.length) {
-      const establishmentEntities = establishments.map(est => 
-        this.establishmentRepository.create({
-          ...est,
-          userId: savedUser.id,
-        })
-      );
-      await this.establishmentRepository.save(establishmentEntities);
-    }
+    // if (role === UserRole.CUSTOMER && establishments?.length) {
+    //   const establishmentEntities = establishments.map(est => 
+    //     this.establishmentRepository.create({
+    //       ...est,
+    //       userId: savedUser.id,
+    //     })
+    //   );
+    //   await this.establishmentRepository.save(establishmentEntities);
+    // }
 
     // Send verification email
     await this.sendVerificationEmail(savedUser.email, emailVerificationCode);

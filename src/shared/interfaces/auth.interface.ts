@@ -25,10 +25,11 @@ export interface IManagerDetails {
 }
 
 export interface IRegisterData {
-  unpData: IUnpResponse;
+  // unpData: IUnpResponse;
+  unp: string;
   email: string;
   password: string;
   isCustomer: boolean;
-  places: IPlace[];
-  managerDetails: IManagerDetails;
+  places?: IPlace[];
+  managerDetails?: IManagerDetails;
 }

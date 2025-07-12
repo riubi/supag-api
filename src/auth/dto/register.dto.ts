@@ -88,11 +88,11 @@ export class ManagerDetailsDto implements IManagerDetails {
 }
 
 export class RegisterDto implements IRegisterData {
-  @ApiProperty()
-  @IsObject()
-  @ValidateNested()
-  @Type(() => UnpResponseDto)
-  unpData: UnpResponseDto;
+  // @ApiProperty()
+  // @IsObject()
+  // @ValidateNested()
+  // @Type(() => UnpResponseDto)
+  // unpData: UnpResponseDto;
 
   @ApiProperty({ example: 'user@example.com' })
   @IsEmail()
@@ -108,15 +108,19 @@ export class RegisterDto implements IRegisterData {
   @IsBoolean()
   isCustomer: boolean;
 
-  @ApiProperty({ type: [PlaceDto] })
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => PlaceDto)
-  places: PlaceDto[];
-
   @ApiProperty()
-  @IsObject()
-  @ValidateNested()
-  @Type(() => ManagerDetailsDto)
-  managerDetails: ManagerDetailsDto;
+  @IsString()
+  unp: string;
+
+  // @ApiProperty({ type: [PlaceDto] })
+  // @IsArray()
+  // @ValidateNested({ each: true })
+  // @Type(() => PlaceDto)
+  // places: PlaceDto[];
+
+  // @ApiProperty()
+  // @IsObject()
+  // @ValidateNested()
+  // @Type(() => ManagerDetailsDto)
+  // managerDetails: ManagerDetailsDto;
 } 
