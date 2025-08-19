@@ -3,6 +3,7 @@ import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagg
 import { UsersService } from './users.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { ChangeMainCategoryDto } from './dto/change-main-category.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Users')
@@ -24,6 +25,13 @@ export class UsersController {
   @ApiResponse({ status: 200, description: 'Profile updated successfully' })
   async updateProfile(@Request() req, @Body() updateProfileDto: UpdateProfileDto) {
     return this.usersService.updateProfile(req.user.id, updateProfileDto);
+  }
+
+  @Put('profile/change-main-category')
+  @ApiOperation({ summary: 'Change main category' })
+  @ApiResponse({ status: 200, description: 'Main category changed successfully' })
+  async changeMainCategory(@Request() req, @Body() changeMainCategoryDto: ChangeMainCategoryDto) {
+    return this.usersService.changeMainCategory(req.user.id, changeMainCategoryDto);
   }
 
   @Put('change-password')

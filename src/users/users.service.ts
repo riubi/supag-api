@@ -5,6 +5,7 @@ import * as bcrypt from 'bcryptjs';
 import { User } from './entities/user.entity';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { ChangeMainCategoryDto } from './dto/change-main-category.dto';
 
 @Injectable()
 export class UsersService {
@@ -17,7 +18,7 @@ export class UsersService {
     const user = await this.userRepository.findOne({
       where: { id: userId },
       relations: ['establishments'],
-      select: ['id', 'email', 'taxId', 'shortName', 'fullName', 'payerAddress', 'role', 'createdAt'],
+      select: ['id', 'email', 'taxId', 'shortName', 'fullName', 'payerAddress', 'role', 'mainCategory', 'createdAt'],
     });
 
     if (!user) {
@@ -36,6 +37,22 @@ export class UsersService {
 
     Object.assign(user, updateProfileDto);
     return this.userRepository.save(user);
+  }
+
+  async changeMainCategory(userId: string, changeMainCategoryDto: ChangeMainCategoryDto) {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    user.mainCategory = changeMainCategoryDto.mainCategory;
+    await this.userRepository.save(user);
+
+    return { 
+      message: 'Main category updated successfully',
+      mainCategory: user.mainCategory 
+    };
   }
 
   async changePassword(userId: string, changePasswordDto: ChangePasswordDto) {

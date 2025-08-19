@@ -65,6 +65,9 @@ export class User {
   @Column({ name: 'reset_password_expires', nullable: true })
   resetPasswordExpires: Date;
 
+  @Column({ name: 'main_category', nullable: true })
+  mainCategory: string;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
