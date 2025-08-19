@@ -23,18 +23,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          # Authenticate to Heroku
-          echo $HEROKU_API_KEY | heroku auth:token
-          
-          # Verify authentication
-          heroku auth:whoami
-          
-          # Add Heroku remote
-          git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/node-ci-cd.git
-          
-          # Push to Heroku
-          git push heroku main
+#      - name: Deploy to Heroku
+#        env:
+#          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+#        run: |
+#          # Authenticate to Heroku
+#          echo $HEROKU_API_KEY | heroku auth:token
+#
+#          # Verify authentication
+#          heroku auth:whoami
+#
+#          # Add Heroku remote
+#          git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/node-ci-cd.git
+#
+#          # Push to Heroku
+#          git push heroku main
